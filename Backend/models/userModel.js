@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt")
 
 const userSchema = new mongoose.Schema({
     fullname :{
@@ -38,7 +39,7 @@ userSchema.methods.generateAuthToken = ()=>{
     return token;
 }
 
-userSchema.methods.hashPassword = async (password)=>{
+userSchema.statics.hashPassword = async (password)=>{
                return await bcrypt.hash(password,10)
 }
 
