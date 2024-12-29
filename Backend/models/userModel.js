@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
     password:{
         type: String,
         required: true,
-        selcet:false,   // this will not return password when we get user data
+        select:false,   // this will not return password when we get user data
     },
 
     socketid:{
@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema({
     },
 })
 
-userSchema.methods.generateAuthToken = ()=>{
+userSchema.methods.generateAuthToken = function (){
     const token = jwt.sign({_id: this._id}, process.env.JWT_SECRET);
     return token;
 }
@@ -43,7 +43,7 @@ userSchema.statics.hashPassword = async (password)=>{
                return await bcrypt.hash(password,10)
 }
 
-userSchema.methods.comparePassword = async(password)=>{
+userSchema.methods.comparePassword = async function(password){
     return await bcrypt.compare(password, this.password)
 
 }
