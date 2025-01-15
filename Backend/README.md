@@ -276,3 +276,143 @@ Example:
     "message": "Unauthorized"
   }
   ```
+
+# Captain Login Endpoint
+
+## Endpoint
+`POST /captain/login`
+
+## Description
+This endpoint is used to log in an existing captain. It requires the captain's email and password.
+
+## Request Body
+The request body should be a JSON object containing the following fields:
+
+- `email` (string): The email address of the captain. Must be a valid email format.
+- `password` (string): The password for the captain account. Must be at least 6 characters long.
+
+Example:
+```json
+{
+  "email": "jane.doe@example.com",
+  "password": "password123"
+}
+```
+
+## Responses
+
+### Success
+- **Status Code:** 200 OK
+- **Response Body:**
+  ```json
+  {
+    "token": "jwt_token_here",
+    "captain": {
+      "_id": "captain_id_here",
+      "fullname": {
+        "firstname": "Jane",
+        "lastname": "Doe"
+      },
+      "email": "jane.doe@example.com",
+      "vehicle": {
+        "color": "red",
+        "plate": "ABC123",
+        "capacity": 4,
+        "vehicleType": "car"
+      }
+      // ...other captain fields...
+    }
+  }
+  ```
+
+### Validation Errors
+- **Status Code:** 400 Bad Request
+- **Response Body:**
+  ```json
+  {
+    "errors": [
+      {
+        "msg": "Error message here",
+        "param": "field_name",
+        "location": "body"
+      }
+    ]
+  }
+  ```
+
+### Authentication Errors
+- **Status Code:** 401 Unauthorized
+- **Response Body:**
+  ```json
+  {
+    "message": "Invalid email and password"
+  }
+  ```
+
+# Captain Profile Endpoint
+
+## Endpoint
+`GET /captain/profile`
+
+## Description
+This endpoint is used to get the profile of the currently authenticated captain.
+
+## Responses
+
+### Success
+- **Status Code:** 200 OK
+- **Response Body:**
+  ```json
+  {
+    "_id": "captain_id_here",
+    "fullname": {
+      "firstname": "Jane",
+      "lastname": "Doe"
+    },
+    "email": "jane.doe@example.com",
+    "vehicle": {
+      "color": "red",
+      "plate": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car"
+    }
+    // ...other captain fields...
+  }
+  ```
+
+### Authentication Errors
+- **Status Code:** 401 Unauthorized
+- **Response Body:**
+  ```json
+  {
+    "message": "Unauthorized"
+  }
+  ```
+
+# Captain Logout Endpoint
+
+## Endpoint
+`GET /captain/logout`
+
+## Description
+This endpoint is used to log out the currently authenticated captain.
+
+## Responses
+
+### Success
+- **Status Code:** 200 OK
+- **Response Body:**
+  ```json
+  {
+    "message": "Logged Out"
+  }
+  ```
+
+### Authentication Errors
+- **Status Code:** 401 Unauthorized
+- **Response Body:**
+  ```json
+  {
+    "message": "Unauthorized"
+  }
+  ```
