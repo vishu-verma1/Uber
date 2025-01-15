@@ -1,7 +1,7 @@
 # User Registration Endpoint
 
 ## Endpoint
-`POST /register`
+`POST /users/register`
 
 ## Description
 This endpoint is used to register a new user. It requires the user's first name, last name, email, and password.
@@ -60,10 +60,11 @@ Example:
     ]
   }
   ```
+
 # User Login Endpoint
 
 ## Endpoint
-`POST /login`
+`POST /users/login`
 
 ## Description
 This endpoint is used to log in an existing user. It requires the user's email and password.
@@ -126,12 +127,10 @@ Example:
   }
   ```
 
-
-
 # User Logout Endpoint
 
 ## Endpoint
-`GET /logout`
+`GET /users/logout`
 
 ## Description
 This endpoint is used to log out the currently authenticated user.
@@ -156,11 +155,10 @@ This endpoint is used to log out the currently authenticated user.
   }
   ```
 
-
 # User Profile Endpoint
 
 ## Endpoint
-`GET /profile`
+`GET /users/profile`
 
 ## Description
 This endpoint is used to get the profile of the currently authenticated user.
@@ -179,6 +177,94 @@ This endpoint is used to get the profile of the currently authenticated user.
     },
     "email": "john.doe@example.com",
     // ...other user fields...
+  }
+  ```
+
+### Authentication Errors
+- **Status Code:** 401 Unauthorized
+- **Response Body:**
+  ```json
+  {
+    "message": "Unauthorized"
+  }
+  ```
+
+# Captain Registration Endpoint
+
+## Endpoint
+`POST /captain/register`
+
+## Description
+This endpoint is used to register a new captain. It requires the captain's first name, last name, email, password, and vehicle details.
+
+## Request Body
+The request body should be a JSON object containing the following fields:
+
+- `fullname.firstname` (string): The first name of the captain. Must be at least 3 characters long.
+- `fullname.lastname` (string): The last name of the captain. Must be at least 3 characters long if provided.
+- `email` (string): The email address of the captain. Must be a valid email format.
+- `password` (string): The password for the captain account. Must be at least 6 characters long.
+- `vehicle.color` (string): The color of the vehicle.
+- `vehicle.plate` (string): The plate number of the vehicle. Must be at least 3 characters long.
+- `vehicle.capacity` (number): The capacity of the vehicle. Must be at least 1.
+- `vehicle.vehicleType` (string): The type of the vehicle. Must be one of 'motorcycle', 'auto', or 'car'.
+
+Example:
+```json
+{
+  "fullname": {
+    "firstname": "Jane",
+    "lastname": "Doe"
+  },
+  "email": "jane.doe@example.com",
+  "password": "password123",
+  "vehicle": {
+    "color": "red",
+    "plate": "ABC123",
+    "capacity": 4,
+    "vehicleType": "car"
+  }
+}
+```
+
+## Responses
+
+### Success
+- **Status Code:** 201 Created
+- **Response Body:**
+  ```json
+  {
+    "token": "jwt_token_here",
+    "captain": {
+      "_id": "captain_id_here",
+      "fullname": {
+        "firstname": "Jane",
+        "lastname": "Doe"
+      },
+      "email": "jane.doe@example.com",
+      "vehicle": {
+        "color": "red",
+        "plate": "ABC123",
+        "capacity": 4,
+        "vehicleType": "car"
+      }
+      // ...other captain fields...
+    }
+  }
+  ```
+
+### Validation Errors
+- **Status Code:** 400 Bad Request
+- **Response Body:**
+  ```json
+  {
+    "errors": [
+      {
+        "msg": "Error message here",
+        "param": "field_name",
+        "location": "body"
+      }
+    ]
   }
   ```
 
