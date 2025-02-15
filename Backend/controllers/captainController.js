@@ -40,6 +40,7 @@ module.exports.registerCaptain = async (req, res) => {
 
 module.exports.loginCaptain = async (req, res) => {
   try {
+   
     const error = validationResult(req);
     if (!error.isEmpty()) {
       return res.status(400).json({ errors: error.array() });
@@ -53,6 +54,7 @@ module.exports.loginCaptain = async (req, res) => {
     }
 
     const isMatch = await captain.comparePassword(password);
+    
     if (!isMatch) {
       return res.status(400).json({ message: "invalid email or password" });
     }
